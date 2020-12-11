@@ -4,23 +4,22 @@ function createUser(req, res) {
     var sql = "INSERT INTO users VALUES ('0','" + req.user_name + "','" + req.user_password + "','" + req.user_email + "')";
     db.connection.query(sql, function (err, result) {
         if (err) {
-            console.log('error on something');
+            console.log('createUser error');
             //console.log(err);
             res.status(400).send('Something broke!');
         } else {
-            var id = result.insertId;
-            createWallet(req, res, id)
-            console.log("1 record inserted");
-            res.status(200).send(""+result.insertId);
+            createWallet(req, res, result.insertId)
+            //console.log("1 record inserted");
+            //res.status(200).send(""+result.insertId);
         }
     });
 }
 
 function createWallet(req, res, id) {
-    var sql = "INSERT INTO users_wallet VALUES ('0','" + id + "','" + req.bitcoin + "','" + req.ethereum + "')";
+    var sql = "INSERT INTO user_wallet VALUES ('0','" + id + "','0','0')";
     db.connection.query(sql, function (err, result) {
         if (err) {
-            console.log('error on something');
+            console.log('createWallet error');
             //console.log(err);
             res.status(400).send('Something broke!');
         } else {
@@ -31,7 +30,8 @@ function createWallet(req, res, id) {
 }
 
 function connectUser(req, res) {
-    var sql = "SELECT user_id FROM users WHERE email='" + req.user_email + "' && password ='" + req.user_password + "'";
+    console.log(req);
+    var sql = "SELECT user_id FROM users WHERE user_email='" + req.user_email + "' && user_password ='" + req.user_password + "'";
     db.connection.query(sql, function (err, result) {
         if (result.length === 0) {
             console.log('error on something');
