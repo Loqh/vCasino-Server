@@ -8,6 +8,22 @@ function createUser(req, res) {
             //console.log(err);
             res.status(400).send('Something broke!');
         } else {
+            var id = result.insertId;
+            createWallet(req, res, id)
+            console.log("1 record inserted");
+            res.status(200).send(""+result.insertId);
+        }
+    });
+}
+
+function createWallet(req, res, id) {
+    var sql = "INSERT INTO users_wallet VALUES ('0','" + id + "','" + req.bitcoin + "','" + req.ethereum + "')";
+    db.connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('error on something');
+            //console.log(err);
+            res.status(400).send('Something broke!');
+        } else {
             console.log("1 record inserted");
             res.status(200).send(""+result.insertId);
         }
@@ -134,5 +150,4 @@ module.exports.changePassword = changePassword;
 module.exports.deleteUser = deleteUser;
 module.exports.nameVerification = nameVerification;
 module.exports.getName = getName;
-module.exports.getEmail = getName;
-
+module.exports.getEmail = getEmail;
