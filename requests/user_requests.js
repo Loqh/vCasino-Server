@@ -6,7 +6,7 @@ function createUser(req, res) {
         if (err) {
             console.log('createUser error');
             //console.log(err);
-            res.status(400).send('Something broke!');
+            res.status(400).send();
         } else {
             createWallet(req, res, result.insertId)
             //console.log("1 record inserted");
@@ -24,7 +24,7 @@ function createWallet(req, res, id) {
             res.status(400).send('Something broke!');
         } else {
             console.log("1 record inserted");
-            res.status(200).send(""+result.insertId);
+            res.status(200).send(""+id);
         }
     });
 }
@@ -45,15 +45,16 @@ function connectUser(req, res) {
 }
 
 function changeMail(req, res) {
-    var sql = "UPDATE users SET email =" + req.user_email + "' WHERE id = " + req.user_id + "')";
+    var sql = "UPDATE users SET user_email = '" + req.user_email + "' WHERE user_id = " + req.user_id + ""
     db.connection.query(sql, function (err, result) {
-        if (err) {
+        console.log(result);
+        if (result == null) {
             console.log('error on something');
             //console.log(err);
             res.status(400).send('Something broke!');
         } else {
             console.log("1 record inserted");
-            res.status(200).send(""+ result);
+            res.status(200).send();
         }
     });
 }
@@ -61,7 +62,8 @@ function changeMail(req, res) {
 function changeName(req, res) {
     var sql = "UPDATE users SET user_name = '" + req.user_name + "' WHERE user_id = " + req.user_id + ""
     db.connection.query(sql, function (err, result) {
-        if (result.changedRows == 0) {
+        console.log(result);
+        if (result == null) {
             console.log('error on something');
             //console.log(err);
             res.status(400).send('Something broke!');
@@ -105,12 +107,12 @@ function nameVerification (req, res) {
     var sql = "SELECT user_name FROM users WHERE user_name='" + req.user_name + "'"
     db.connection.query(sql, function (err, result) {
         if (result.length === 0) {
-            console.log('error on something');
-            //console.log(err);
-            res.status(400).send('Something broke!');
-        } else {
-            console.log("1 record inserted");
+            console.log("name is available");
             res.status(200).send();
+
+        } else {
+            console.log('name is already taken');
+            res.status(400).send('Something broke!');
         }
     });
 }
