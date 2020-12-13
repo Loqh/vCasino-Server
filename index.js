@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const bodyParser = require("body-parser");
 
 var user = require('./routes/user.js');
+var wallet = require('./routes/wallet.js');
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -17,5 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/user', user);
+app.use('/api/wallet', wallet);
 
 server.listen(8080);
