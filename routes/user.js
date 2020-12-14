@@ -1,30 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var requests = require('../requests/user_requests');
+const { mw_check_auth } = require('../middlewares')
 
 // Requête POST
-router.post('/create', function (req, res) {
-  console.log('post called');
-  console.log(req.body);
-  requests.createUser(req.body, res);
-});
+router.post('/create',requests.createUser);
 
 // Requête Connection
 router.post('/login', function (req, res) {
   console.log('post called');
-  console.log(req.body);
+  console.log(req.body, req.query, req.params, req.headers, );
   requests.connectUser(req.body, res);
 });
 
 // Requête Changement de mail
-router.post('/update/email', function (req, res) {
+router.post('/update/email', mw_check_auth, function (req, res) {
   console.log('post called');
   console.log(req.body);
   requests.changeMail(req.body, res);
 });
 
 // Requête Changement de Name
-router.post('/update/name', function (req, res) {
+router.post('/update/name', mw_check_auth, function (req, res) {
   console.log('post called');
   console.log(req.body);
   requests.changeName(req.body, res);
@@ -38,7 +35,7 @@ router.post('/update/password', function (req, res) {
 });
 
 // Requête Suppression utilisateur
-router.post('/delete', function (req, res) {
+router.post('/delete', mw_check_auth, function (req, res) {
   console.log('post called');
   console.log(req.body);
   requests.changePassword(req.body, res);

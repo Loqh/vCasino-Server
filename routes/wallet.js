@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var requests = require('../requests/wallet_requests');
+const { mw_check_auth } = require('../middlewares')
 
 // Requête récupération nom
 router.post('/get/bitcoin', function (req, res) {

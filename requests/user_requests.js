@@ -1,18 +1,18 @@
 var db = require('../database');
+const AuthServices = require('../services/auth_services.js')
 
-function createUser(req, res) {
-    var sql = "INSERT INTO users VALUES ('0','" + req.user_name + "','" + req.user_password + "','" + req.user_email + "')";
-    db.connection.query(sql, function (err, result) {
-        if (err) {
-            console.log('createUser error');
-            //console.log(err);
-            res.status(400).send();
-        } else {
-            createWallet(req, res, result.insertId)
-            //console.log("1 record inserted");
-            //res.status(200).send(""+result.insertId);
-        }
-    });
+async function createUser(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await AuthServices.createUser(user_name, user_password, user_email)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error createUser requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
 }
 
 function createWallet(req, res, id) {
@@ -60,7 +60,7 @@ function changeMail(req, res) {
 }
 
 function changeName(req, res) {
-    var sql = "UPDATE users SET user_name = '" + req.user_name + "' WHERE user_id = " + req.user_id + ""
+    var sql = "UPDATE users SET user_name = '" + req.user_name + "' WHERE user_id = " + req.user_id
     db.connection.query(sql, function (err, result) {
         console.log(result);
         if (result == null) {
@@ -75,15 +75,16 @@ function changeName(req, res) {
 }
 
 function changePassword(req, res) {
-    var sql = "UPDATE users SET password =" + req.user_password + "' WHERE id = " + req.user_id + ""
+    var sql = "UPDATE users SET user_password = '" + req.user_password + "' WHERE user_id = " + req.user_id
     db.connection.query(sql, function (err, result) {
-        if (err) {
+        console.log(result);
+        if (result == null) {
             console.log('error on something');
             //console.log(err);
             res.status(400).send('Something broke!');
         } else {
-            console.log("1 record inserted");
-            res.status(200).send(""+ result);
+            console.log("pass updated");
+            res.status(200).send();
         }
     });
 }
@@ -104,9 +105,13 @@ function deleteUser(req, res) {
 
 function nameVerification (req, res) {
     console.log(req.user_name);
-    var sql = "SELECT user_name FROM users WHERE user_name='" + req.user_name + "'"
+    var sql = "SELECT user_name FROM users WHERE user_name='" + req.user_name
     db.connection.query(sql, function (err, result) {
-        if (result.length === 0) {
+        if (err) {
+            console.error(err)
+            return res.status(500).end()
+        }
+        if (!result || result.length === 0) {
             console.log("name is available");
             res.status(200).send();
 
