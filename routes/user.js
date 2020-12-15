@@ -6,6 +6,9 @@ const { mw_check_auth } = require('../middlewares')
 // Requête POST
 router.post('/create',requests.createUser);
 
+
+
+
 // Requête Connection
 router.post('/login', function (req, res) {
   console.log('post called');

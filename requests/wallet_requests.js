@@ -101,6 +101,24 @@ function getEthereum (req, res) {
     });
 }
 
+function retraitBitcoin (req, res) {
+    var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id=" + req.user_id
+    console.log(req.user_id);
+    db.connection.query(sql, function (err, result) {
+        console.log(result);
+        console.log(err);
+        if (result < req.user_retrait) {
+            console.log('error retrait');
+            res.status(400).send('Fond insuffisant pour retrait!');
+        } else {
+            var resultat = req.user_retrait - result;
+            var sql = "UPDATE users_wallet SET bitcoin = " + resultat + "' WHERE user_id = " + req.user_id + ""
+            console.log("Retrait en cours");
+            res.status(200).send();
+        }
+    });
+}
+
 module.exports.getBitcoin = getBitcoin;
 module.exports.getEthereum = getEthereum;
 module.exports.addBitcoin = addBitcoin;
