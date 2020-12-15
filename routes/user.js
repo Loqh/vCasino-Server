@@ -17,11 +17,13 @@ router.post('/login', function (req, res) {
 });
 
 // Requête Changement de mail
-router.post('/update/email', mw_check_auth, function (req, res) {
+/*router.post('/update/email', mw_check_auth, function (req, res) {
   console.log('post called');
   console.log(req.body);
   requests.changeMail(req.body, res);
-});
+});*/
+
+//router.post('/update/email', mw_check_auth, requests.changeMail)
 
 // Requête Changement de Name
 router.post('/update/name', mw_check_auth, function (req, res) {

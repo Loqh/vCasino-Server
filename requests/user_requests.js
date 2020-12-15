@@ -44,7 +44,7 @@ function connectUser(req, res) {
     });
 }
 
-function changeMail(req, res) {
+/*function changeMail(req, res) {
     var sql = "UPDATE users SET user_email = '" + req.user_email + "' WHERE user_id = " + req.user_id + ""
     db.connection.query(sql, function (err, result) {
         console.log(result);
@@ -57,7 +57,7 @@ function changeMail(req, res) {
             res.status(200).send();
         }
     });
-}
+}*/
 
 function changeName(req, res) {
     var sql = "UPDATE users SET user_name = '" + req.user_name + "' WHERE user_id = " + req.user_id
@@ -152,7 +152,7 @@ function getEmail (req, res) {
 
 module.exports.createUser = createUser;
 module.exports.connectUser = connectUser;
-module.exports.changeMail = changeMail;
+//module.exports.changeMail = changeMail;
 module.exports.changeName = changeName;
 module.exports.changePassword = changePassword;
 module.exports.deleteUser = deleteUser;

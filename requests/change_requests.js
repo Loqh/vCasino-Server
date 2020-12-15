@@ -6,8 +6,12 @@ const ChangeServices = require('../services/change_services.js')
 async function changeMail(req, res) {
     try {
         // todo: verify body
-        const {user_email } = req.body
-        const result = await ChangeServices.changeMail(user_email)
+        console.log("requests changeMail")
+        const {user_email, auth_token } = req.body
+        console.log("req.body")
+        console.log(req.body)
+        console.log(req.user);
+        const result = await ChangeServices.changeMail(req.body.user_email, req.user)
         res.status(200).json(result)
     }
     catch (err) {

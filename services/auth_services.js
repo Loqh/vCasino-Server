@@ -60,12 +60,14 @@ async function checkAuthToken(token) {
     const sql = `SELECT UNIX_TIMESTAMP(date_create) as date_create, UNIX_TIMESTAMP(expiration) as expiration FROM tokens WHERE auth_token = '${token}'`;
     try {
         const result = await dbQuery(sql);
+        console.log("result checkAuth")
+        console.log(result)
         if (result.length === 0) {
             return false
         }
         const authToken = result[0]
         if (authToken.date_create + authToken.expiration < +new Date()) {
-            return authToken.user_id
+            return true;
         }
         return false
     }
@@ -74,14 +76,14 @@ async function checkAuthToken(token) {
     }
 }
 
-async function getUserById(user_id) {
-    const sql = `SELECT * FROM users WHERE user_id = '${user_id}'`;
+async function getUserById(auth_token) {
+    const sql = `SELECT users.user_id FROM users LEFT JOIN tokens ON users.user_id = tokens.user_id WHERE tokens.auth_token =  '${auth_token}'`;
     try {
         const result = await dbQuery(sql);
         if (result.length === 0) {
             return false
         }
-        return result[0]
+        return result[0].user_id
     }
     catch(err) {
         throw new Error('Cannot create user')

@@ -5,7 +5,7 @@ const { mw_check_auth } = require('../middlewares')
 
 
 // Requête POST
-router.post('/mail',requests.changeMail);
+router.post('/email', mw_check_auth ,requests.changeMail);
 
 // Requête POST
 router.post('/name',requests.changeName);

@@ -1,8 +1,11 @@
 var { dbQuery } = require('../database');
 const crypto = require('crypto')
 
-async function changeMail(req, res) {
-    var sql = "UPDATE users SET user_email = '" + req.user_email + "' WHERE user_id = " + req.user_id + ""
+async function changeMail(user_email, user_id) {
+    console.log("changeMail req user");
+    console.log(user_email);
+    console.log(user_id)
+    var sql = "UPDATE users SET user_email = '" + user_email + "' WHERE user_id = " + user_id
     console.log(sql);
         try {
             const result = await dbQuery(sql);
