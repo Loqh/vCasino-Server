@@ -24,13 +24,13 @@ async function changeName(req, res) {
         res.status(200).json(result)
     }
     catch (err) {
-        console.log("error createUser requests")
+        console.log("error changeName requests")
         console.log(err);
         res.status(500).json({ message: err.message })
     }
 }
 
-async function changeMail(req, res) {
+async function changeEmail(req, res) {
     try {
         // todo: verify body
         const {user_name } = req.body
@@ -38,7 +38,7 @@ async function changeMail(req, res) {
         res.status(200).json(result)
     }
     catch (err) {
-        console.log("error createUser requests")
+        console.log("error changeEmail requests")
         console.log(err);
         res.status(500).json({ message: err.message })
     }
@@ -52,7 +52,77 @@ async function changePassword(req, res) {
         res.status(200).json(result)
     }
     catch (err) {
-        console.log("error createUser requests")
+        console.log("error changePassword requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
+async function connectUser(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await UserServices.connectUser(user_name, user_password, user_email)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error connectUser requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
+async function deleteUser(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await UserServices.deleteUser(user_name, user_password, user_email, req.user)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error deleteUser requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
+async function nameVerification(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await UserServices.nameVerification(user_name,)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error nameVerification requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
+async function getName(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await UserServices.getName(user_name, req.user)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error getName requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
+async function getEmail(req, res) {
+    try {
+        // todo: verify body
+        const { user_name, user_password, user_email } = req.body
+        const result = await UserServices.getEmail(user_email, req.user)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error getEmail requests")
         console.log(err);
         res.status(500).json({ message: err.message })
     }
@@ -60,9 +130,12 @@ async function changePassword(req, res) {
 
 
 
+
+
+
 module.exports.changeName = changeName;
 module.exports.changePassword = changePassword;
-module.exports.changeMail = changeMail;
+module.exports.changeEmail = changeEmail;
 module.exports.createUser = createUser;
 module.exports.connectUser = connectUser;
 module.exports.deleteUser = deleteUser;

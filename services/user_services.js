@@ -71,7 +71,7 @@ function connectUser(req, res) {
 
 
 function deleteUser(req, res) {
-    var sql = "DELETE FROM users WHERE id='"+req.user_id+"'"
+    var sql = "DELETE FROM users WHERE id='"+user_id+"'"
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.log('error on something');
@@ -133,7 +133,6 @@ function getEmail (req, res) {
 
 
 
-exports.createUser = createUser;
 exports.connectUser = connectUser;
 exports.deleteUser = deleteUser;
 exports.nameVerification = nameVerification;
