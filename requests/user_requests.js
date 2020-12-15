@@ -19,7 +19,7 @@ async function createUser(req, res) {
 async function changeName(req, res) {
     try {
         // todo: verify body
-        const {user_name } = req.body
+        const { user_name } = req.body
         const result = await UserServices.changeName(req.body.user_name , req.user)
         res.status(200).json(result)
     }
