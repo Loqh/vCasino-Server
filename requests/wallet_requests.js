@@ -1,25 +1,22 @@
 var db = require('../database');
 
-async function addBitcoin(req, res) {
-    const currentWallet = await getUserWallet(req.user_id);
-    const mesBitcoin = currentWallet.bitcoin
-    console.log(currentWallet);
-    console.log("wallet");
-    console.log(mesBitcoin);
-    console.log("bitcoin")
 
-    /*var sql = "UPDATE user_wallet SET bitcoin = " + req.amount + " WHERE user_wallet_id = " + req.user_id
-    db.connection.query(sql, function (err, result) {
-        console.log(result);
-        if (result == null) {
-            console.log('error on something');
-            //console.log(err);
-            res.status(400).send('Something broke!');
-        } else {
-            console.log("bitcoin updated");
-            res.status(200).send();
-        }
-    });*/
+async function addBitcoin(req, res) {
+    try {
+        // todo: verify body
+        console.log("requests addBitcoin")
+        const {user_email, auth_token } = req.body
+        console.log("req.body")
+        console.log(req.body)
+        console.log(req.user);
+        const result = await WalletServices.addBitcoin(req.user)
+        res.status(200).json(result)
+    }
+    catch (err) {
+        console.log("error createUser requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
 }
 
 function getUserWallet(user_id) {

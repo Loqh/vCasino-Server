@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 var user = require('./routes/user.js');
 var wallet = require('./routes/wallet.js');
 var games = require('./routes/games.js');
-var updates = require('./routes/change.js')
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -22,6 +21,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/user', user);
 app.use('/api/wallet', wallet);
 app.use('/api/games', games);
-app.use('/api/user/update', updates);
 
 server.listen(8080);

@@ -6,6 +6,18 @@ const { mw_check_auth } = require('../middlewares')
 // Requête POST
 router.post('/create',requests.createUser);
 
+// Requête POST
+router.post('/email', mw_check_auth ,requests.changeMail);
+
+// Requête POST
+router.post('/name',mw_check_auth,requests.changeName);
+
+// Requête POST
+router.post('/password',mw_check_auth,requests.changePassword);
+
+
+
+
 
 
 
@@ -15,15 +27,6 @@ router.post('/login', function (req, res) {
   console.log(req.body, req.query, req.params, req.headers, );
   requests.connectUser(req.body, res);
 });
-
-// Requête Changement de mail
-/*router.post('/update/email', mw_check_auth, function (req, res) {
-  console.log('post called');
-  console.log(req.body);
-  requests.changeMail(req.body, res);
-});*/
-
-//router.post('/update/email', mw_check_auth, requests.changeMail)
 
 // Requête Changement de Name
 router.post('/update/name', mw_check_auth, function (req, res) {
