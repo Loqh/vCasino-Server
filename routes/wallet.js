@@ -8,24 +8,21 @@ const { mw_check_auth } = require('../middlewares')
 // Requête POST
 router.post('/addBitcoin', mw_check_auth ,requests.addBitcoin);
 
+// Requête POST
+router.post('/addBitcoin', mw_check_auth ,requests.getUserWallet);
+
+// Requête POST
+router.post('/addBitcoin', mw_check_auth ,requests.getBitcoin);
+
+// Requête POST
+router.post('/addBitcoin', mw_check_auth ,requests.getEthereum);
+
+// Requête POST
+router.post('/addBitcoin', mw_check_auth ,requests.retraitBitcoin);
 
 
 
 
-
-// Requête récupération nom
-router.post('/get/bitcoin', function (req, res) {
-    console.log('post called');
-    console.log(req.body);
-    requests.getBitcoin(req.body, res);
-});
-
-// Requête récupération nom
-router.post('/get/ethereum', function (req, res) {
-    console.log('post called');
-    console.log(req.body);
-    requests.getEthereum(req.body, res);
-});
 
 
 module.exports = router;
