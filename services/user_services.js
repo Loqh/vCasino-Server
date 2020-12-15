@@ -84,9 +84,9 @@ function deleteUser(req, res) {
     });
 }
 
-function nameVerification (req, res) {
+function nameVerification (user_name) {
     console.log(req.user_name);
-    var sql = "SELECT user_name FROM users WHERE user_name='" + req.user_name
+    var sql = "SELECT user_name FROM users WHERE user_name='" + user_name
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.error(err)
@@ -94,12 +94,9 @@ function nameVerification (req, res) {
         }
         if (!result || result.length === 0) {
             console.log("name is available");
-            res.status(200).send();
-
         } else {
             console.log('name is already taken');
-            res.status(400).send('Something broke!');
-        }
+$        }
     });
 }
 

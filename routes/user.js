@@ -10,17 +10,17 @@ router.post('/connect',requests.connectUser);
 
 router.post('/delete',requests.deleteUser);
 
-router.post('/email', mw_check_auth ,requests.changeEmail);
+router.post('/update/email', mw_check_auth ,requests.changeEmail);
 
-router.post('/name',mw_check_auth,requests.changeName);
+router.post('/update/name',mw_check_auth,requests.changeName);
 
-router.post('/password',mw_check_auth,requests.changePassword);
+router.post('/update/password',mw_check_auth,requests.changePassword);
 
-router.post('/nameVerification',requests.nameVerification);
+router.post('/check/name',requests.nameVerification);
 
-router.post('/getEmail', mw_check_auth ,requests.getEmail);
+router.post('/get/email', mw_check_auth ,requests.getEmail);
 
-router.post('/getName', mw_check_auth ,requests.getName);
+router.post('/get/name', mw_check_auth ,requests.getName);
 
 
 module.exports = router;
