@@ -16,8 +16,8 @@ async function createWallet(user_id) {
 
 }
 
-async function addBitcoin(req, res) {
-    var sql = "UPDATE user_wallet SET bitcoin = '" + req.amount + "' WHERE user_wallet_id = '" + req.user +"'"
+async function addBitcoin(user_id) {
+    var sql = "UPDATE user_wallet SET bitcoin = '" + req.amount + "' WHERE user_wallet_id = '" + user_id +"'"
     console.log(sql);
     try {
         const result = await dbQuery(sql);
@@ -33,7 +33,7 @@ async function addBitcoin(req, res) {
 
 function getUserWallet(user_id) {
     return new Promise((resolve, reject) => {
-        var sql = "SELECT bitcoin,ethereum FROM user_wallet WHERE user_wallet_id= '" + req.user + "'"
+        var sql = "SELECT bitcoin,ethereum FROM user_wallet WHERE user_wallet_id= '" + user_id + "'"
         db.connection.query(sql, function (err, result) {
             console.log(result);
             console.log(err);
@@ -47,7 +47,7 @@ function getUserWallet(user_id) {
 }
 
 function returnBitcoin(user_id) {
-    var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id= '" + req.user + "'"
+    var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id= '" + user_id + "'"
     db.connection.query(sql, function (err, result) {
         console.log(result);
         console.log(err);
@@ -61,8 +61,8 @@ function returnBitcoin(user_id) {
     });
 }
 
-async function getWallet (req, res) {
-    var sql = "SELECT bitcoin,ethereum FROM user_wallet WHERE user_wallet_id= '" + req.user + "'"
+async function getWallet (user_id) {
+    var sql = "SELECT bitcoin,ethereum FROM user_wallet WHERE user_wallet_id= '" + user_id + "'"
     console.log(req.user_id);
     const wallet = await getUserWallet(req.user_id)
     return res.json({
@@ -71,48 +71,42 @@ async function getWallet (req, res) {
     })
 }
 
-function getBitcoin (req, res) {
-    var sql = "SELECT bitcoin FROM users_wallet WHERE user_wallet_id= '" + req.user + "'"
+function getBitcoin (user_id) {
+    var sql = "SELECT bitcoin FROM users_wallet WHERE user_wallet_id= '" + user_id + "'"
     db.connection.query(sql, function (err, result) {
         if (result.length === 0) {
             console.log('error on ethereum');
             //console.log(err);
-            res.status(400).send('Something broke!');
         } else {
             console.log("ethereum ok");
-            res.status(200).send(""+ result[0]);
         }
     });
 }
 
-function getEthereum (req, res) {
-    var sql = "SELECT ethereum FROM users_wallet WHERE user_wallet_id= '" + req.user + "'"
+function getEthereum (user_id) {
+    var sql = "SELECT ethereum FROM users_wallet WHERE user_wallet_id= '" + user_id + "'"
     db.connection.query(sql, function (err, result) {
         if (result.length === 0) {
             console.log('error on ethereum');
             //console.log(err);
-            res.status(400).send('Something broke!');
         } else {
             console.log("ethereum ok");
-            res.status(200).send(""+ result[0]);
         }
     });
 }
 
-function retraitBitcoin (req, res) {
-    var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id= '" + req.user +"'"
+function retraitBitcoin (user_id) {
+    var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id= '" + user_id +"'"
     console.log(req.user);
     db.connection.query(sql, function (err, result) {
         console.log(result);
         console.log(err);
         if (result < req.user_retrait) {
-            console.log('error retrait');
-            res.status(400).send('Fond insuffisant pour retrait!');
+            console.log('Fond insuffisant pour retrait!');
         } else {
             var resultat = req.user_retrait - result;
-            var sql = "UPDATE users_wallet SET bitcoin = '" + resultat + "' WHERE user_id = '" + req.user_id + "'"
+            var sql = "UPDATE users_wallet SET bitcoin = '" + resultat + "' WHERE user_id = '" + user_id + "'"
             console.log("Retrait en cours");
-            res.status(200).send();
         }
     });
 }

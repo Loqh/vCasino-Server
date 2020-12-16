@@ -6,19 +6,19 @@ const { mw_check_auth } = require('../middlewares')
 
 
 // Requête POST
-router.post('/addBitcoin', mw_check_auth ,requests.addBitcoin);
+router.post('/add/Bitcoin', mw_check_auth ,requests.addBitcoin);
 
 // Requête POST
-router.post('/addBitcoin', mw_check_auth ,requests.getUserWallet);
+router.post('/get/Userwallet', mw_check_auth ,requests.getUserWallet);
 
 // Requête POST
-router.post('/addBitcoin', mw_check_auth ,requests.getBitcoin);
+router.post('/get/bitcoin', mw_check_auth ,requests.getBitcoin);
 
 // Requête POST
-router.post('/addBitcoin', mw_check_auth ,requests.getEthereum);
+router.post('/get/ethereum', mw_check_auth ,requests.getEthereum);
 
 // Requête POST
-router.post('/addBitcoin', mw_check_auth ,requests.retraitBitcoin);
+router.post('/retrait/bitcoin', mw_check_auth ,requests.retraitBitcoin);
 
 
 

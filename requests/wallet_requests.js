@@ -6,11 +6,11 @@ async function addBitcoin(req, res) {
     try {
         // todo: verify body
         console.log("requests addBitcoin")
-        const {user_email, auth_token } = req.body
+        const { user_bitcoin_depot } = req.body
         console.log("req.body")
         console.log(req.body)
         console.log(req.user);
-        const result = await WalletServices.addBitcoin(req.user)
+        const result = await WalletServices.addBitcoin(req.user, user_bitcoin_depot)
         res.status(200).json(result)
     }
     catch (err) {
@@ -23,7 +23,7 @@ async function addBitcoin(req, res) {
 async function getUserWallet(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_email } = req.body
         const result = await WalletServices.getUserWallet(user_email, req.user)
         res.status(200).json({ token: result })
     }
@@ -37,7 +37,7 @@ async function getUserWallet(req, res) {
 async function getBitcoin(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_email } = req.body
         const result = await WalletServices.getBitcoin(user_email, req.user)
         res.status(200).json({ token: result })
     }
@@ -51,7 +51,7 @@ async function getBitcoin(req, res) {
 async function getEthereum(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_email } = req.body
         const result = await WalletServices.getEthereum(user_email, req.user)
         res.status(200).json({ token: result })
     }
@@ -65,7 +65,7 @@ async function getEthereum(req, res) {
 async function retraitBitcoin(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_email } = req.body
         const result = await WalletServices.retraitBitcoin(user_email, req.user)
         res.status(200).json({ token: result })
     }

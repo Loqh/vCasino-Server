@@ -56,17 +56,19 @@ async function changePassword(req, res) {
 function connectUser(req, res) {
     console.log(req);
     var sql = "SELECT user_id FROM users WHERE user_email='" + req.user_email + "' && user_password ='" + req.user_password + "'";
-    db.connection.query(sql, function (err, result) {
-        if (result.length === 0) {
-            console.log('error on something');
-            //console.log(err);
-            res.status(400).send('Something broke!');
-        } else {
-            console.log("1 record inserted");
-            res.status(200).send(""+ result[0].user_id);
-        }
-    });
+    console.log(sql);
+    try {
+        const result = await dbQuery(sql);
+        console.log(result)
+
+    }
+    catch(err) {
+        console.log("changePassword error");
+        console.log(err);
+        throw new Error('Cannot change Password')
+    }
 }
+
 
 
 
@@ -75,11 +77,9 @@ function deleteUser(req, res) {
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.log('error on something');
-            //console.log(err);
-            res.status(400).send('Something broke!');
+
         } else {
             console.log("1 record inserted");
-            res.status(200).send(""+ result);
         }
     });
 }
@@ -90,7 +90,6 @@ function nameVerification (user_name) {
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.error(err)
-            return res.status(500).end()
         }
         if (!result || result.length === 0) {
             console.log("name is available");
@@ -101,12 +100,11 @@ $        }
 }
 
 function getName (req, res) {
-    var sql = "SELECT user_name FROM users WHERE id=" + req.user_id + "'"
+    var sql = "SELECT user_name FROM users WHERE id=" + user_id + "'"
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.log('error on something');
             //console.log(err);
-            res.status(400).send('Something broke!');
         } else {
             console.log("1 record inserted");
             res.status(200).send(""+ result);
@@ -115,12 +113,11 @@ function getName (req, res) {
 }
 
 function getEmail (req, res) {
-    var sql = "SELECT user_email FROM users WHERE id=" + req.user_id + "'"
+    var sql = "SELECT user_email FROM users WHERE id=" + user_id + "'"
     db.connection.query(sql, function (err, result) {
         if (err) {
             console.log('error on something');
             //console.log(err);
-            res.status(400).send('Something broke!');
         } else {
             console.log("1 record inserted");
             res.status(200).send(""+ result);

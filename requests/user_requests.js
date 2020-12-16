@@ -20,7 +20,7 @@ async function changeName(req, res) {
     try {
         // todo: verify body
         const { user_name } = req.body
-        const result = await UserServices.changeName(req.body.user_name , req.user)
+        const result = await UserServices.changeName(user_name , req.user)
         res.status(200).json(result)
     }
     catch (err) {
@@ -33,8 +33,8 @@ async function changeName(req, res) {
 async function changeEmail(req, res) {
     try {
         // todo: verify body
-        const {user_name } = req.body
-        const result = await UserServices.changeMail(req.body.user_mail , req.user)
+        const { user_mail } = req.body
+        const result = await UserServices.changeMail(user_mail , req.user)
         res.status(200).json(result)
     }
     catch (err) {
@@ -47,8 +47,8 @@ async function changeEmail(req, res) {
 async function changePassword(req, res) {
     try {
         // todo: verify body
-        const {user_name } = req.body
-        const result = await UserServices.changePassword(req.body.user_password, req.user)
+        const { user_password } = req.body
+        const result = await UserServices.changePassword(user_password, req.user)
         res.status(200).json(result)
     }
     catch (err) {
@@ -89,8 +89,8 @@ async function deleteUser(req, res) {
 async function nameVerification(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
-        const result = await UserServices.nameVerification(user_name,)
+        const { user_name } = req.body
+        const result = await UserServices.nameVerification(user_name)
         res.status(200).json({ token: result })
     }
     catch (err) {
@@ -103,7 +103,7 @@ async function nameVerification(req, res) {
 async function getName(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_name } = req.body
         const result = await UserServices.getName(user_name, req.user)
         res.status(200).json({ token: result })
     }
@@ -117,7 +117,7 @@ async function getName(req, res) {
 async function getEmail(req, res) {
     try {
         // todo: verify body
-        const { user_name, user_password, user_email } = req.body
+        const { user_email } = req.body
         const result = await UserServices.getEmail(user_email, req.user)
         res.status(200).json({ token: result })
     }
