@@ -16,7 +16,7 @@ async function createWallet(user_id) {
 
 }
 
-async function addBitcoin(user_id) {
+async function addBitcoin(user_id, req) {
     var sql = "UPDATE user_wallet SET bitcoin = '" + req.amount + "' WHERE user_wallet_id = '" + user_id +"'"
     console.log(sql);
     try {
@@ -71,29 +71,36 @@ async function getWallet (user_id) {
     })
 }
 
-function getBitcoin (user_id) {
+async function getBitcoin (user_id) {
     var sql = "SELECT bitcoin FROM users_wallet WHERE user_wallet_id= '" + user_id + "'"
-    db.connection.query(sql, function (err, result) {
-        if (result.length === 0) {
-            console.log('error on ethereum');
-            //console.log(err);
-        } else {
-            console.log("ethereum ok");
-        }
-    });
+    console.log(sql);
+    try {
+        const result = await dbQuery(sql);
+        console.log(result)
+
+    }
+    catch(err) {
+        console.log("getBitcoin error");
+        console.log(err);
+        throw new Error('Cannot getBitcoin')
+    }
 }
 
-function getEthereum (user_id) {
+async function getEthereum (user_id) {
     var sql = "SELECT ethereum FROM users_wallet WHERE user_wallet_id= '" + user_id + "'"
-    db.connection.query(sql, function (err, result) {
-        if (result.length === 0) {
-            console.log('error on ethereum');
-            //console.log(err);
-        } else {
-            console.log("ethereum ok");
-        }
-    });
+    console.log(sql);
+    try {
+        const result = await dbQuery(sql);
+        console.log(result)
+
+    }
+    catch(err) {
+        console.log("get Ethereum error");
+        console.log(err);
+        throw new Error('Cannot getEthereum')
+    }
 }
+
 
 function retraitBitcoin (user_id) {
     var sql = "SELECT bitcoin FROM user_wallet WHERE user_wallet_id= '" + user_id +"'"
@@ -117,3 +124,5 @@ module.exports.addBitcoin = addBitcoin;
 exports.createWallet = createWallet;
 exports.addBitcoin = addBitcoin;
 module.exports.retraitBitcoin = retraitBitcoin;
+module.exports.getWallet = getWallet;
+module.exports.returnBitcoin = returnBitcoin;

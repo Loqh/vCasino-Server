@@ -14,7 +14,7 @@ async function addBitcoin(req, res) {
         res.status(200).json(result)
     }
     catch (err) {
-        console.log("error createUser requests")
+        console.log("error addBitcoin requests")
         console.log(err);
         res.status(500).json({ message: err.message })
     }

@@ -20,7 +20,7 @@ async function changeMail(user_email, user_id) {
     }
 
 
-async function changeName(req, res) {
+async function changeName(req, user_id) {
     var sql = "UPDATE users SET user_name = '" + req.user_name + "' WHERE user_id = " + user_id
     console.log(sql);
     try {
@@ -36,7 +36,7 @@ async function changeName(req, res) {
 }
 
 
-async function changePassword(req, res) {
+async function changePassword(user_password, user_id) {
     password = crypto.createHash('sha512').update(password).digest('hex')
     var sql = "UPDATE users SET user_password = '" + password + "' WHERE user_id = " + user_id
     console.log(sql);
@@ -53,7 +53,7 @@ async function changePassword(req, res) {
 }
 
 
-function connectUser(req, res) {
+async function connectUser(req, res) {
     console.log(req);
     var sql = "SELECT user_id FROM users WHERE user_email='" + req.user_email + "' && user_password ='" + req.user_password + "'";
     console.log(sql);
@@ -72,7 +72,7 @@ function connectUser(req, res) {
 
 
 
-function deleteUser(req, res) {
+function deleteUser(user_id) {
     var sql = "DELETE FROM users WHERE id='"+user_id+"'"
     db.connection.query(sql, function (err, result) {
         if (err) {
