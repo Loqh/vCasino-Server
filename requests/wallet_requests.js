@@ -76,6 +76,20 @@ async function retraitBitcoin(req, res) {
     }
 }
 
+async function getWalletByName(req, res) {
+    try {
+        // todo: verify body
+        const { user_email } = req.body
+        const result = await WalletServices.getWalletByName(user_email, req.user)
+        res.status(200).json({ token: result })
+    }
+    catch (err) {
+        console.log("error getWalletByName requests")
+        console.log(err);
+        res.status(500).json({ message: err.message })
+    }
+}
+
 
 
 
@@ -85,3 +99,4 @@ module.exports.getUserWallet = getUserWallet;
 module.exports.getBitcoin = getBitcoin;
 module.exports.getEthereum = getEthereum;
 module.exports.retraitBitcoin = retraitBitcoin;
+module.exports.getWalletByName = getWalletByName;

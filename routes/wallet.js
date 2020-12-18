@@ -20,6 +20,10 @@ router.post('/get/ethereum', mw_check_auth ,requests.getEthereum);
 // Requête POST
 router.post('/retrait/bitcoin', mw_check_auth ,requests.retraitBitcoin);
 
+// Requête POST
+router.post('/get/walletByName', mw_check_auth ,requests.getWalletByName);
+
+
 
 
 

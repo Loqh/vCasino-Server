@@ -71,6 +71,19 @@ async function getWallet (user_id) {
     })
 }
 
+async function getWalletByName (user_id) {
+    var sql = "SELECT bitcoin,ethereum" +
+              "FROM users " +
+              "LEFT JOIN user_wallet on users.user_id = user_wallet_id" +
+              "WHERE user_name= '" + user_id + "'"
+    console.log(req.user_id);
+    const wallet = await getUserWallet(req.user_id)
+    return res.json({
+        bitcoin: wallet.bitcoin,
+        ethereum: wallet.ethereum
+    })
+}
+
 async function getBitcoin (user_id) {
     var sql = "SELECT bitcoin FROM users_wallet WHERE user_wallet_id= '" + user_id + "'"
     console.log(sql);
@@ -121,8 +134,9 @@ function retraitBitcoin (user_id) {
 module.exports.getBitcoin = getBitcoin;
 module.exports.getEthereum = getEthereum;
 module.exports.addBitcoin = addBitcoin;
-exports.createWallet = createWallet;
-exports.addBitcoin = addBitcoin;
+module.exports.createWallet = createWallet;
+module.exports.addBitcoin = addBitcoin;
 module.exports.retraitBitcoin = retraitBitcoin;
 module.exports.getWallet = getWallet;
 module.exports.returnBitcoin = returnBitcoin;
+module.exports.getWalletByName = getWalletByName;
